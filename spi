@@ -20,31 +20,6 @@ vsysarch=$(getconf LONG_BIT) # System architecture
 uname="default"
 pword="default"
 
-# Autodetect Linux Distribution
-# PoC may need to be rewritten.
-if cat /etc/*release | grep ^NAME | grep -E 'Red|CentOS'; then
-	if cat /etc/*release | grep ^VERSION | grep 5; then
-		rhel5
-	elif cat /etc/*release | grep ^VERSION | grep 6; then
-		rhel6
-	elif cat /etc/*release | grep ^VERSION | grep 7; then
-		rhel7
-	fi
-elif cat /etc/*release | grep ^NAME | grep Fedora; then
-	fed
-elif cat /etc/*release | grep ^NAME | grep Ubuntu; then
-	ubt
-elif cat /etc/*release | grep ^NAME | grep Debian ; then
-	if cat /etc/*release | grep ^VERSION | grep 8; then
-		deb8
-	else
-		deb
-	fi
-else
-	echo "OS NOT DETECTED"
-	exit 1;
-fi
-
 # Function for iptables rules (CentOS 5 & 6)
 firew1 ()	{
 	# Opening default Squid port 3128 for clients to connect
@@ -215,3 +190,28 @@ case $1 in
 	;;  
 esac
 done
+
+# Autodetect Linux Distribution
+# PoC may need to be rewritten.
+if cat /etc/*release | grep ^NAME | grep -E 'Red|CentOS'; then
+	if cat /etc/*release | grep ^VERSION | grep 5; then
+		rhel5
+	elif cat /etc/*release | grep ^VERSION | grep 6; then
+		rhel6
+	elif cat /etc/*release | grep ^VERSION | grep 7; then
+		rhel7
+	fi
+elif cat /etc/*release | grep ^NAME | grep Fedora; then
+	fed
+elif cat /etc/*release | grep ^NAME | grep Ubuntu; then
+	ubt
+elif cat /etc/*release | grep ^NAME | grep Debian ; then
+	if cat /etc/*release | grep ^VERSION | grep 8; then
+		deb8
+	else
+		deb
+	fi
+else
+	echo "OS NOT DETECTED"
+	exit 1;
+fi
