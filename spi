@@ -33,7 +33,8 @@ if cat /etc/*release | grep ^NAME | grep -E 'Red|CentOS'; then
 elif cat /etc/*release | grep ^NAME | grep Fedora; then
 	fed
 elif cat /etc/*release | grep ^NAME | grep Ubuntu; then
-	ubt
+	echo "Ubuntu"
+	#ubt
 elif cat /etc/*release | grep ^NAME | grep Debian ; then
 	if cat /etc/*release | grep ^VERSION | grep 8; then
 		deb8
@@ -44,7 +45,7 @@ else
 	echo "OS NOT DETECTED"
 	exit 1;
 fi
-
+exit 1;
 # Function for iptables rules (CentOS 5 & 6)
 firew1 ()	{
 	# Opening default Squid port 3128 for clients to connect
