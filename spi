@@ -191,12 +191,12 @@ done
 
 # Autodetect Linux Distribution
 # PoC may need to be rewritten.
-if cat /etc/*release | grep ^NAME | grep -E 'Red|CentOS'; then
-	if cat /etc/*release | grep ^VERSION | grep 5; then
-		rhel5
-	elif cat /etc/*release | grep ^VERSION | grep 6; then
-		rhel6
-	elif cat /etc/*release | grep ^VERSION | grep 7; then
+if cat /etc/*release | grep -E 'Red|CentOS' | grep '5.'; then
+	rhel5;
+elif cat /etc/*release | grep -E 'Red|CentOS' | grep '6.'; then
+	rhel6;
+elif cat /etc/*release | grep ^NAME | grep -E 'Red|CentOS'; then
+	if cat /etc/*release | grep ^VERSION | grep 7; then
 		rhel7
 	fi
 elif cat /etc/*release | grep ^NAME | grep Fedora; then
