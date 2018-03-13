@@ -98,26 +98,8 @@ rhel7 ()	{
 	firew2
 }
 
-# Function for Debian "Squeeze" 6 and Debian "Wheezy" 7
-deb ()	{
-	# Updating package database
-	apt-get update
-	# Installing necessary packages (Squid, apache2-utils for htpassword and dependencies)
-	apt-get install apache2-utils squid3 -y
-	# Creating user with username from $uname and asking user to set a password
-	htpasswd -b -c /etc/squid3/passwd $uname $pword
-	# Downloading Squid configuration
-	wget -O /etc/squid3/squid.conf https://raw.githubusercontent.com/hidden-refuge/squid-proxy-installer/master/spi-debian.conf --no-check-certificate
-	# Creating empty blacklist.acl file for further blacklisting entries
-	touch /etc/squid3/blacklist.acl
-	# Restarting Squid and enabling its service
-	service squid3 restart && update-rc.d squid3 defaults
-	# Running function firew2
-	firew2
-}
-
 # Function for Debian "Jessie" 8
-deb8 ()	{
+deb ()	{
 	# Updating package database
 	apt-get update
 	# Installing necessary packages (Squid, apache2-utils for htpassword and dependencies)
@@ -125,7 +107,7 @@ deb8 ()	{
 	# Creating user with username from $uname and asking user to set a password
 	htpasswd -b -c /etc/squid/passwd $uname $pword
 	# Downloading Squid configuration
-	wget -O /etc/squid/squid.conf https://raw.githubusercontent.com/hidden-refuge/squid-proxy-installer/master/spi-jessie.conf --no-check-certificate
+	wget -O /etc/squid/squid.conf https://raw.githubusercontent.com/dostoevskylabs/spi/master/spi-stretch.conf --no-check-certificate
 	# Creating empty blacklist.acl file for further blacklisting entries
 	touch /etc/squid/blacklist.acl
 	# Restarting Squid and enabling its service
@@ -204,11 +186,7 @@ elif cat /etc/*release | grep ^NAME | grep Fedora; then
 elif cat /etc/*release | grep ^NAME | grep Ubuntu; then
 	ubt
 elif cat /etc/*release | grep ^NAME | grep Debian ; then
-	if cat /etc/*release | grep ^VERSION | grep -E '8|9'; then
-		deb8
-	else
-		deb
-	fi
+	deb
 else
 	echo "OS NOT DETECTED"
 	exit 1;
