@@ -97,7 +97,7 @@ deb ()	{
 	# Installing necessary packages (Squid, apache2-utils for htpassword and dependencies)
 	apt-get install apache2-utils squid3 -y
 	# Creating user with username from $uname and asking user to set a password
-	htpasswd -b -c /etc/squid/passwd $uname $pword
+	htpasswd -b -c /etc/squid3/passwd $uname $pword
 	# Downloading Squid configuration
 	wget -O /etc/squid3/squid.conf https://raw.githubusercontent.com/hidden-refuge/squid-proxy-installer/master/spi-jessie.conf --no-check-certificate
 	# Creating empty blacklist.acl file for further blacklisting entries
@@ -180,6 +180,7 @@ elif cat /etc/*release | grep ^NAME | grep Debian ; then
 		deb9
 	else
 		deb
+	fi
 else
 	echo "OS NOT DETECTED"
 	exit 1;
