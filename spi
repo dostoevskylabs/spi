@@ -23,36 +23,36 @@ pword="default"
 # Function for iptables rules (CentOS 5 & 6)
 firew1 ()	{
 	# Opening default Squid port 3128 for clients to connect
-	iptables -I INPUT -p tcp --dport 3128 -j ACCEPT
+	sudo iptables -I INPUT -p tcp --dport 3128 -j ACCEPT
 	# Saving firewall rules
-	service iptables save
+	sudo service iptables save
 }
 
 # Function for iptables rules (CentOS 7, Debian, Ubuntu, Fedora)
 firew2 ()	{
 	# Opening default Squid port 3128 for clients to connect
-	iptables -I INPUT -p tcp --dport 3128 -j ACCEPT
+	sudo iptables -I INPUT -p tcp --dport 3128 -j ACCEPT
 	# Saving firewall rules
-	iptables-save
+	sudo iptables-save
 }
 
 # Function for RHEL 6 Linux distributions
 rhel6 ()	{
 	# Installing necessary packages (Squid, httpd-tools for htpasswd and dependencies)
-	yum install squid httpd-tools -y
+	sudo yum install squid httpd-tools -y
 	# Creating user with username from $uname and asking user to set a password
-	htpasswd -b -c /etc/squid/passwd $uname $pword
+	sudo htpasswd -b -c /etc/squid/passwd $uname $pword
 	# Downloading necessary Squid.conf for the corresponding OS & system architecture
 	case $vsysarch in
 			32) # 32 bit Squid configuration
-					curl -o /etc/squid/squid.conf https://raw.githubusercontent.com/dostoevskylabs/spi/master/spi-rhel5632.conf;;
+					sudo curl -o /etc/squid/squid.conf https://raw.githubusercontent.com/dostoevskylabs/spi/master/spi-rhel5632.conf;;
 			64) # 64 bit Squid configuration
-					curl -o /etc/squid/squid.conf https://raw.githubusercontent.com/dostoevskylabs/spi/master/spi-rhel5664.conf;;
+					sudo curl -o /etc/squid/squid.conf https://raw.githubusercontent.com/dostoevskylabs/spi/master/spi-rhel5664.conf;;
 	esac
 	# Creating empty blacklist.acl file for further blacklisting entries
-	touch /etc/squid/blacklist.acl
+	sudo touch /etc/squid/blacklist.acl
 	# Restarting Squid and enabling its service
-	service squid restart && chkconfig squid on
+	sudo service squid restart && chkconfig squid on
 	# Running function firew1
 	firew1	
 }
@@ -60,15 +60,15 @@ rhel6 ()	{
 # Function for RHEL 7 Linux distributions
 rhel7 ()	{
 	# Installing necessary packages (Squid, httpd-tools for htpasswd and dependencies)
-	yum install squid httpd-tools -y
+	sudo yum install squid httpd-tools -y
 	# Creating user with username from $uname and asking user to set a password
-	htpasswd -b -c /etc/squid/passwd $uname $pword
+	sudo htpasswd -b -c /etc/squid/passwd $uname $pword
 	# Downloading Squid configuration 
-	curl -o /etc/squid/squid.conf https://raw.githubusercontent.com/dostoevskylabs/spi/master/spi-rhel7.conf
+	sudo curl -o /etc/squid/squid.conf https://raw.githubusercontent.com/dostoevskylabs/spi/master/spi-rhel7.conf
 	# Creating empty blacklist.acl file for further blacklisting entries
-	touch /etc/squid/blacklist.acl
+	sudo touch /etc/squid/blacklist.acl
 	# Restarting Squid and enabling its service
-	systemctl restart squid.service && systemctl enable squid.service
+	sudo systemctl restart squid.service && systemctl enable squid.service
 	# Running function firew2
 	firew2
 }
