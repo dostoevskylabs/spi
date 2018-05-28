@@ -31,9 +31,9 @@ firew1 ()	{
 # Function for iptables rules (CentOS 7, Debian, Ubuntu, Fedora)
 firew2 ()	{
 	# Opening default Squid port 3128 for clients to connect
-	sudo iptables -I INPUT -p tcp --dport 3128 -j ACCEPT || iptables -I INPUT -p tcp --dport 3128 -j ACCEPT
+	iptables -I INPUT -p tcp --dport 3128 -j ACCEPT
 	# Saving firewall rules
-	sudo iptables-save || iptables-save
+	iptables-save
 }
 
 # Function for RHEL 6 Linux distributions
@@ -52,7 +52,7 @@ rhel6 ()	{
 	# Creating empty blacklist.acl file for further blacklisting entries
 	sudo touch /etc/squid/blacklist.acl
 	# Restarting Squid and enabling its service
-	sudo service squid restart && chkconfig squid on
+	sudo service squid restart && sudo chkconfig squid on
 	# Running function firew1
 	firew1	
 }
