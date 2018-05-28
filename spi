@@ -45,9 +45,9 @@ rhel6 ()	{
 	# Downloading necessary Squid.conf for the corresponding OS & system architecture
 	case $vsysarch in
 			32) # 32 bit Squid configuration
-					sudo curl -o /etc/squid/squid.conf https://raw.githubusercontent.com/dostoevskylabs/spi/master/spi-rhel5632.conf;;
+					sudo curl -k -o /etc/squid/squid.conf https://raw.githubusercontent.com/dostoevskylabs/spi/master/spi-rhel5632.conf;;
 			64) # 64 bit Squid configuration
-					sudo curl -o /etc/squid/squid.conf https://raw.githubusercontent.com/dostoevskylabs/spi/master/spi-rhel5664.conf;;
+					sudo curl -k -o /etc/squid/squid.conf https://raw.githubusercontent.com/dostoevskylabs/spi/master/spi-rhel5664.conf;;
 	esac
 	# Creating empty blacklist.acl file for further blacklisting entries
 	sudo touch /etc/squid/blacklist.acl
@@ -64,7 +64,7 @@ rhel7 ()	{
 	# Creating user with username from $uname and asking user to set a password
 	sudo htpasswd -b -c /etc/squid/passwd $uname $pword
 	# Downloading Squid configuration 
-	sudo curl -o /etc/squid/squid.conf https://raw.githubusercontent.com/dostoevskylabs/spi/master/spi-rhel7.conf
+	sudo curl -k -o /etc/squid/squid.conf https://raw.githubusercontent.com/dostoevskylabs/spi/master/spi-rhel7.conf
 	# Creating empty blacklist.acl file for further blacklisting entries
 	sudo touch /etc/squid/blacklist.acl
 	# Restarting Squid and enabling its service
@@ -86,7 +86,7 @@ deb9 ()	{
 	# Creating empty blacklist.acl file for further blacklisting entries
 	touch /etc/squid/blacklist.acl
 	# Restarting Squid and enabling its service
-	systemctl restart squid.service && systemctl enable squid.service
+	systemctl restart squid3.service && systemctl enable squid3.service || systemctl restart squid.service && systemctl enable squid.service 
 	# Running function firew2
 	firew2
 }
