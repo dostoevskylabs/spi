@@ -122,7 +122,7 @@ ubt ()	{
 	# Creating empty blacklist.acl file for further blacklisting entries
 	sudo touch /etc/squid/blacklist.acl	
 	# Restarting Squid and enabling its service
-	sudo systemctl restart squid && systemctl enable squid
+	sudo systemctl restart squid && sudo systemctl enable squid
 	# Running function firew2
 	firew2
 }
