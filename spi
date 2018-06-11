@@ -104,7 +104,7 @@ deb ()	{
 	touch /etc/squid3/blacklist.acl
 	# Restarting Squid and enabling its service
 	systemctl enable squid3.service
-	service restart squid3
+	service squid3 restart
 	# Running function firew2
 	firew2
 }
