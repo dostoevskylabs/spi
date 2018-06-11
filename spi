@@ -31,9 +31,9 @@ firew1 ()	{
 # Function for iptables rules (CentOS 7, Debian, Ubuntu, Fedora)
 firew2 ()	{
 	# Opening default Squid port 3128 for clients to connect
-	iptables -I INPUT -p tcp --dport 3128 -j ACCEPT
+	sudo iptables -I INPUT -p tcp --dport 3128 -j ACCEPT || iptables -I INPUT -p tcp --dport 3128 -j ACCEPT
 	# Saving firewall rules
-	iptables-save
+	sudo iptables-save || iptables-save
 }
 
 # Function for RHEL 6 Linux distributions
@@ -112,17 +112,17 @@ deb ()	{
 # Function for Ubuntu
 ubt ()	{
 	# Updating package database
-	apt-get update
+	sudo apt-get update
 	# Installing necessary packages (Squid, apache2-utils for htpassword and dependencies)
-	apt-get install apache2-utils squid3 -y
+	sudo apt-get install apache2-utils squid3 -y
 	# Creating user with username from $uname and asking user to set a password
-	htpasswd -b -c /etc/squid/passwd $uname $pword
+	sudo htpasswd -b -c /etc/squid/passwd $uname $pword
 	# Downloading Squid configuration
-	wget -O /etc/squid/squid.conf https://raw.githubusercontent.com/dostoevskylabs/spi/master/spi-ubuntu.conf --no-check-certificate
+	sudo wget -O /etc/squid/squid.conf https://raw.githubusercontent.com/dostoevskylabs/spi/master/spi-ubuntu.conf --no-check-certificate
 	# Creating empty blacklist.acl file for further blacklisting entries
-	touch /etc/squid/blacklist.acl	
+	sudo touch /etc/squid/blacklist.acl	
 	# Restarting Squid and enabling its service
-	systemctl restart squid && systemctl enable squid
+	sudo systemctl restart squid && systemctl enable squid
 	# Running function firew2
 	firew2
 }
