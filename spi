@@ -118,7 +118,7 @@ ubt ()	{
 	# Creating user with username from $uname and asking user to set a password $uname $pword 
 	sudo htpasswd -b -c /etc/squid/passwd $uname $pword || sudo htpasswd -b -c /etc/squid3/passwd $uname $pword
 	# Downloading Squid configuration
-	sudo wget -O /etc/squid/squid.conf https://raw.githubusercontent.com/dostoevskylabs/spi/master/spi-ubuntu.conf --no-check-certificate || sudo wget -O /etc/squid3/squid.conf https://raw.githubusercontent.com/dostoevskylabs/spi/master/spi-ubuntu.conf --no-check-certificate
+	sudo wget -O /etc/squid/squid.conf https://raw.githubusercontent.com/dostoevskylabs/spi/master/spi-ubuntu.conf --no-check-certificate || sudo wget -O /etc/squid3/squid.conf https://raw.githubusercontent.com/dostoevskylabs/spi/master/spi-ubuntu-squid3.conf --no-check-certificate
 	# Creating empty blacklist.acl file for further blacklisting entries
 	sudo touch /etc/squid/blacklist.acl || sudo touch /etc/squid3/blacklist.acl
 	# Restarting Squid and enabling its service
